@@ -20,7 +20,7 @@ fun main() {
     // Render
     println("P3\n${imageWidth} ${imageHeight}\n256")
     for (j in imageHeight - 1 downTo 0) {
-        System.err.print("\rScanlines remaining: $j ")
+        System.err.print("\rScanlines remaining: $j  ")
         System.err.flush()
         for (i in 0 until imageWidth) {
             val u = i.toDouble() / (imageWidth - 1)
@@ -32,13 +32,14 @@ fun main() {
 }
 
 fun Ray.color(): Color {
-    val hitValue = hitSphere(Point(0.0, 0.0, -1.0), 0.5)
+    val center = Point(0.0, 0.0, -1.0)
+    val hitValue = hitSphere(center, 0.5)
     if (hitValue > 0.0) {
-        val norm = at(hitValue) - Vector(0.0, 0.0, -1.0)
+        val norm = at(hitValue) - center
         return 0.5 * Color(norm.x + 1.0, norm.y + 1.0, norm.z + 1.0)
     }
-    val vec = 0.5 * (direction.unit().y + 1.0)
-    return (1 - vec) * Color(1.0, 1.0, 1.0) + vec * Color(0.5, 0.7, 1.0)
+    val blendFactor = 0.5 * (direction.unit().y + 1.0)
+    return (1 - blendFactor) * Color(1.0, 1.0, 1.0) + blendFactor * Color(0.5, 0.7, 1.0)
 }
 
 fun Ray.hitSphere(center: Point, radius: Double): Double {
