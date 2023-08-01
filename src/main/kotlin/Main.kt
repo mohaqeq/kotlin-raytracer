@@ -30,6 +30,17 @@ fun main() {
 }
 
 fun Ray.color(): Color {
+    if (hitSphere(Point(0.0, 0.0, -1.0), 0.5))
+        return Color(1.0, 0.0, 0.0)
     val vec = 0.5 * (direction.unit().y + 1.0)
     return (1 - vec) * Color(1.0, 1.0, 1.0) + vec * Color(0.5, 0.7, 1.0)
+}
+
+fun Ray.hitSphere(center: Point, radius: Double): Boolean {
+    val oc = origin - center
+    val a = direction dot direction
+    val b = 2.0 * (oc dot direction)
+    val c = (oc dot oc) - radius * radius
+    val discriminant = b * b - 4 * a * c
+    return discriminant > 0
 }
