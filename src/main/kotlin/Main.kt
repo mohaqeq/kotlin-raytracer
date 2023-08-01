@@ -35,8 +35,8 @@ fun Ray.color(): Color {
     val center = Point(0.0, 0.0, -1.0)
     val hitValue = hitSphere(center, 0.5)
     if (hitValue > 0.0) {
-        val norm = at(hitValue) - center
-        return 0.5 * Color(norm.x + 1.0, norm.y + 1.0, norm.z + 1.0)
+        val surfaceNormal = at(hitValue) - center
+        return 1.5 * Color( surfaceNormal.z , surfaceNormal.z, surfaceNormal.z)
     }
     val blendFactor = 0.5 * (direction.unit().y + 1.0)
     return (1 - blendFactor) * Color(1.0, 1.0, 1.0) + blendFactor * Color(0.5, 0.7, 1.0)
