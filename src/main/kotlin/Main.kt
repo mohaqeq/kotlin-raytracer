@@ -43,13 +43,13 @@ fun Ray.color(): Color {
 
 fun Ray.hitSphere(center: Point, radius: Double): Double {
     val oc = origin - center
-    val a = direction dot direction
-    val b = 2.0 * (oc dot direction)
-    val c = (oc dot oc) - radius * radius
-    val discriminant = b * b - 4 * a * c
+    val a = direction.lengthSquared()
+    val b = oc dot direction
+    val c = oc.lengthSquared() - radius * radius
+    val discriminant = b * b - a * c
     return if (discriminant < 0) {
-        -1.0;
+        -1.0
     } else {
-        (-b - sqrt(discriminant)) / (2.0 * a);
+        (-b - sqrt(discriminant)) / a
     }
 }

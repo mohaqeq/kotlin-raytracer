@@ -42,7 +42,7 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
     infix fun cross(vector: Vector) =
         Vector(y * vector.z - z * vector.y, z * vector.x - x * vector.z, x * vector.y - y * vector.x)
 
-    fun lengthSquared() = x * x + y * y * z * z
+    fun lengthSquared() = x * x + y * y + z * z
 
     fun length() = sqrt(lengthSquared())
 
