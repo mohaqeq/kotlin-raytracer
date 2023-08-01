@@ -7,6 +7,8 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
 
     constructor() : this(0.0, 0.0, 0.0)
 
+    operator fun Vector.unaryMinus(): Vector = Vector(-x, -y, -z)
+
     operator fun Vector.plus(vector: Vector): Vector = Vector(x + vector.x, y + vector.y, z + vector.z)
 
     operator fun Vector.minus(vector: Vector): Vector = Vector(x - vector.x, y - vector.y, z - vector.z)
@@ -35,14 +37,19 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
         this.z /= factor
     }
 
+    infix fun Vector.dot(vector: Vector): Double = x * vector.x + y * vector.y + z * vector.z
+
+    infix fun Vector.cross(vector: Vector): Vector =
+        Vector(y * vector.z - z * vector.y, z * vector.x - x * vector.z, x * vector.y - y * vector.x)
+
     fun lengthSquared(): Double = x * x + y * y * z * z
 
     fun length(): Double = sqrt(lengthSquared())
 
-    fun dot(vector: Vector): Double = x * vector.x + y * vector.y + z * vector.z
-
-    fun cross(vector: Vector): Vector =
-        Vector(y * vector.z - z * vector.y, z * vector.x - x * vector.z, x * vector.y - y * vector.x)
-
     fun unit(): Vector = this / length()
+
+    fun toVectorString() = "$x $y $z"
 }
+
+fun Color.toColorString() = "${(255.999 * x).toInt()} ${(255.999 * y).toInt()} ${(255.999 * z).toInt()}"
+
