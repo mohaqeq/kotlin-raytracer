@@ -7,7 +7,7 @@ data class Ray(val origin: Point, val direction: Vector) {
 
         val hit = world.hit(this, 0.001, Double.MAX_VALUE)
         if (hit.first) {
-            val target = hit.second!!.point + hit.second!!.normal + Vector.randomUnitVector()
+            val target = hit.second!!.point + hit.second!!.normal + Vector.randomInHemisphere(hit.second!!.normal)
             return 0.5 * Ray(hit.second!!.point, target - hit.second!!.point).color(world, depth - 1)
         }
 
