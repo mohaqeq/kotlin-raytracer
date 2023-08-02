@@ -20,6 +20,6 @@ data class Sphere(val center: Point, val radius: Double) : Hittable {
         }
 
         val point = ray.at(root)
-        return Pair(true, Hit(point, (point - center) / radius, root))
+        return Pair(true, Hit.build(point, root, ray.direction, (point - center) / radius))
     }
 }
