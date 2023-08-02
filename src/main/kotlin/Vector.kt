@@ -1,4 +1,5 @@
 import kotlin.math.sqrt
+import kotlin.random.Random
 
 typealias Point = Vector
 typealias Color = Vector
@@ -54,10 +55,29 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
         return "${(255.999 * color.x).toInt()} ${(255.999 * color.y).toInt()} ${(255.999 * color.z).toInt()}"
     }
 
-    private fun clamp(x: Double, min: Double, max: Double) = if (x < min) min else if (x > max) max else x
+    companion object {
+        @JvmStatic
+        fun randomInUnitSphere(): Vector {
+            while (true) {
+                val vector = random(-1.0, 1.0)
+                if (vector.lengthSquared() < 1) return vector
+            }
+        }
 
-    private fun clamp(vector: Vector, min: Double, max: Double) =
-        Vector(clamp(vector.x, min, max), clamp(vector.y, min, max), clamp(vector.z, min, max))
+        @JvmStatic
+        private fun random() = Vector(Random.nextDouble(), Random.nextDouble(), Random.nextDouble())
+
+        @JvmStatic
+        private fun random(min: Double, max: Double) =
+            Vector(Random.nextDouble(min, max), Random.nextDouble(min, max), Random.nextDouble(min, max))
+
+        @JvmStatic
+        private fun clamp(x: Double, min: Double, max: Double) = if (x < min) min else if (x > max) max else x
+
+        @JvmStatic
+        private fun clamp(vector: Vector, min: Double, max: Double) =
+            Vector(clamp(vector.x, min, max), clamp(vector.y, min, max), clamp(vector.z, min, max))
+    }
 }
 
 operator fun Double.times(vector: Vector) = vector * this
