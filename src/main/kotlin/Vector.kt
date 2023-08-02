@@ -57,6 +57,9 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
 
     companion object {
         @JvmStatic
+        fun randomUnitVector() = randomInUnitSphere().unit()
+
+        @JvmStatic
         fun randomInUnitSphere(): Vector {
             while (true) {
                 val vector = random(-1.0, 1.0)
