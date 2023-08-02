@@ -4,7 +4,6 @@ typealias Point = Vector
 typealias Color = Vector
 
 data class Vector(var x: Double, var y: Double, var z: Double) {
-
     constructor() : this(0.0, 0.0, 0.0)
 
     operator fun unaryMinus() = Vector(-x, -y, -z)

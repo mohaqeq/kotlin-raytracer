@@ -1,5 +1,4 @@
 class Hit(val point: Point, val normal: Vector, val t: Double, val front: Boolean) {
-
     companion object {
         @JvmStatic
         fun build(point: Point, t: Double, rayDirection: Vector, outNormal: Vector): Hit {
@@ -10,7 +9,6 @@ class Hit(val point: Point, val normal: Vector, val t: Double, val front: Boolea
 }
 
 interface Hittable {
-
     fun hit(ray: Ray, tMin: Double, tMax: Double): Pair<Boolean, Hit?>
 }
 

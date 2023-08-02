@@ -1,7 +1,6 @@
 import java.io.File
 
 fun main() {
-
     // Image
     val aspectRatio = 16.0 / 9.0
     val imageWidth = 400
