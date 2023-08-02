@@ -49,7 +49,15 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
 
     fun toVectorString() = "$x $y $z"
 
-    fun toColorString() = "${(255.999 * x).toInt()} ${(255.999 * y).toInt()} ${(255.999 * z).toInt()}"
+    fun toColorString(): String {
+        val color = clamp(this, 0.0, 0.999)
+        return "${(255.999 * color.x).toInt()} ${(255.999 * color.y).toInt()} ${(255.999 * color.z).toInt()}"
+    }
+
+    private fun clamp(x: Double, min: Double, max: Double) = if (x < min) min else if (x > max) max else x
+
+    private fun clamp(vector: Vector, min: Double, max: Double) =
+        Vector(clamp(vector.x, min, max), clamp(vector.y, min, max), clamp(vector.z, min, max))
 }
 
 operator fun Double.times(vector: Vector) = vector * this
