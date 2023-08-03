@@ -51,8 +51,7 @@ class Dielectric(private val ir: Double) : Material {
     }
 
     private fun reflectance(cosine: Double, refIdx: Double): Double {
-        var r0 = (1 - refIdx) / (1 + refIdx)
-        r0 *= r0
+        val r0 = (1 - refIdx) / (1 + refIdx).pow(2)
         return r0 + (1 - r0) * (1 - cosine).pow(5)
     }
 }
