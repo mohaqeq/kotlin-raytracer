@@ -12,9 +12,15 @@ fun main() {
     val maxDeath = 50
 
     // World
+    val groundMaterial = Lambertian(Color(0.8, 0.8, 0.0))
+    val centerMaterial = Lambertian(Color(0.7, 0.3, 0.3))
+    val leftMaterial = Metal(Color(0.8, 0.8, 0.8))
+    val rightMaterial = Metal(Color(0.8, 0.6, 0.2))
     val world = listOf(
-        Sphere(Point(0.0, 0.0, -1.0), 0.5),
-        Sphere(Point(0.0, -100.5, -1.0), 100.0)
+        Sphere(Point(0.0, 0.0, -1.0), 0.5, centerMaterial),
+        Sphere(Point(1.1, 0.0, -1.0), 0.5, rightMaterial),
+        Sphere(Point(-1.1, 0.0, -1.0), 0.5, leftMaterial),
+        Sphere(Point(0.0, -100.5, -1.0), 100.0, groundMaterial)
     )
 
     // Camera
@@ -34,7 +40,7 @@ fun main() {
                     pixelColor += ray.color(world, maxDeath)
                 }
                 pixelColor /= pixelSamples.toDouble()
-                val gammaCorrectedColor = Color(sqrt(pixelColor.x),sqrt(pixelColor.y),sqrt(pixelColor.z))
+                val gammaCorrectedColor = Color(sqrt(pixelColor.x), sqrt(pixelColor.y), sqrt(pixelColor.z))
                 writer.println(gammaCorrectedColor.toColorString())
             }
         }

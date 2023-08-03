@@ -5,10 +5,13 @@ data class Ray(val origin: Point, val direction: Vector) {
         if (depth <= 0)
             return Color()
 
-        val hit = world.hit(this, 0.001, Double.MAX_VALUE)
-        if (hit.first) {
-            val target = hit.second!!.point + hit.second!!.normal + Vector.randomInHemisphere(hit.second!!.normal)
-            return 0.5 * Ray(hit.second!!.point, target - hit.second!!.point).color(world, depth - 1)
+        val collisionResult = world.hit(this, 0.001, Double.MAX_VALUE)
+        if (collisionResult.collided) {
+            val scatter = collisionResult.collision!!.material.Scatter(this, collisionResult.collision!!)
+            return if (scatter.collided)
+                scatter.color * scatter.ray.color(world, depth - 1)
+            else
+                Color()
         }
 
         val blendFactor = 0.5 * (direction.unit().y + 1.0)

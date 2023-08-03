@@ -1,3 +1,4 @@
+import kotlin.math.abs
 import kotlin.math.sqrt
 import kotlin.random.Random
 
@@ -46,7 +47,11 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
 
     fun length() = sqrt(lengthSquared())
 
-    fun unit(): Vector = this / length()
+    fun unit() = this / length()
+
+    fun reflect(normal: Vector) = this - 2.0 * (this dot normal) * normal
+
+    fun nearZero() = abs(x) < 1e-8 && abs(y) < 1e-8 && abs(z) < 1e-8
 
     fun toVectorString() = "$x $y $z"
 

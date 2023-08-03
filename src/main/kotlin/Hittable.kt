@@ -1,21 +1,11 @@
-class Hit(val point: Point, val normal: Vector, val t: Double, val front: Boolean) {
-    companion object {
-        @JvmStatic
-        fun build(point: Point, t: Double, rayDirection: Vector, outNormal: Vector): Hit {
-            val front = (rayDirection dot outNormal) < 0
-            return Hit(point, if (front) outNormal else -outNormal, t, front)
-        }
-    }
-}
-
 interface Hittable {
-    fun hit(ray: Ray, tMin: Double, tMax: Double): Pair<Boolean, Hit?>
+    fun hit(ray: Ray, tMin: Double, tMax: Double): Pair<Boolean, Collision?>
 }
 
-fun Iterable<Hittable>.hit(ray: Ray, tMin: Double, tMax: Double): Pair<Boolean, Hit?> {
+fun Iterable<Hittable>.hit(ray: Ray, tMin: Double, tMax: Double): CollisionResult {
     var hitAnything = false
     var closest = tMax
-    var hit: Hit? = null
+    var hit: Collision? = null
 
     for (item in this) {
         val itemHit = item.hit(ray, tMin, closest)
@@ -26,5 +16,5 @@ fun Iterable<Hittable>.hit(ray: Ray, tMin: Double, tMax: Double): Pair<Boolean, 
         }
     }
 
-    return Pair(hitAnything, hit)
+    return CollisionResult(hitAnything, hit)
 }

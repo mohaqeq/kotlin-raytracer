@@ -1,7 +1,7 @@
 import kotlin.math.sqrt
 
-data class Sphere(val center: Point, val radius: Double) : Hittable {
-    override fun hit(ray: Ray, tMin: Double, tMax: Double): Pair<Boolean, Hit?> {
+data class Sphere(val center: Point, val radius: Double, val material: Material) : Hittable {
+    override fun hit(ray: Ray, tMin: Double, tMax: Double): Pair<Boolean, Collision?> {
         val oc = ray.origin - center
         val a = ray.direction.lengthSquared()
         val b = oc dot ray.direction
@@ -19,6 +19,6 @@ data class Sphere(val center: Point, val radius: Double) : Hittable {
         }
 
         val point = ray.at(root)
-        return Pair(true, Hit.build(point, root, ray.direction, (point - center) / radius))
+        return Pair(true, Collision(point, root, material, ray.direction, (point - center) / radius))
     }
 }
