@@ -13,9 +13,9 @@ fun main() {
 
     // World
     val groundMaterial = Lambertian(Color(0.8, 0.8, 0.0))
-    val centerMaterial = Lambertian(Color(0.7, 0.3, 0.3))
-    val leftMaterial = Metal(Color(0.8, 0.8, 0.8))
-    val rightMaterial = Metal(Color(0.8, 0.6, 0.2))
+    val centerMaterial = Dielectric(1.5)
+    val leftMaterial = Metal(Color(0.8, 0.8, 0.8), 0.3)
+    val rightMaterial = Metal(Color(0.8, 0.6, 0.2), 1.0)
     val world = listOf(
         Sphere(Point(0.0, 0.0, -1.0), 0.5, centerMaterial),
         Sphere(Point(1.1, 0.0, -1.0), 0.5, rightMaterial),

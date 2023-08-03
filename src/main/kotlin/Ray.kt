@@ -7,7 +7,7 @@ data class Ray(val origin: Point, val direction: Vector) {
 
         val collisionResult = world.hit(this, 0.001, Double.MAX_VALUE)
         if (collisionResult.collided) {
-            val scatter = collisionResult.collision!!.material.Scatter(this, collisionResult.collision!!)
+            val scatter = collisionResult.collision!!.material.Scatter(this, collisionResult.collision)
             return if (scatter.collided)
                 scatter.color * scatter.ray.color(world, depth - 1)
             else

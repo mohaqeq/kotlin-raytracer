@@ -1,4 +1,5 @@
 import kotlin.math.abs
+import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.random.Random
 
@@ -51,6 +52,13 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
 
     fun reflect(normal: Vector) = this - 2.0 * (this dot normal) * normal
 
+    fun refract(normal: Vector, factor: Double): Vector {
+        val cosTheta = min(-this dot normal, 1.0)
+        val rPrep = factor * (this + cosTheta * normal)
+        val rParallel = -sqrt(abs(1.0 - rPrep.lengthSquared())) * normal
+        return rPrep + rParallel
+    }
+
     fun nearZero() = abs(x) < 1e-8 && abs(y) < 1e-8 && abs(z) < 1e-8
 
     fun toVectorString() = "$x $y $z"
@@ -77,9 +85,6 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
                 if (vector.lengthSquared() < 1) return vector
             }
         }
-
-        @JvmStatic
-        private fun random() = Vector(Random.nextDouble(), Random.nextDouble(), Random.nextDouble())
 
         @JvmStatic
         private fun random(min: Double, max: Double) =
