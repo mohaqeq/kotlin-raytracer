@@ -70,6 +70,14 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
 
     companion object {
         @JvmStatic
+        fun randomInUnitDisk(): Vector {
+            while (true) {
+                val vector = Vector(Random.nextDouble(), Random.nextDouble(), 0.0)
+                if (vector.lengthSquared() < 1) return vector
+            }
+        }
+
+        @JvmStatic
         fun randomInHemisphere(normal: Vector): Vector {
             val inUnitSphere = randomInUnitSphere()
             return if (inUnitSphere dot normal > 0.0) inUnitSphere else -inUnitSphere
