@@ -48,6 +48,7 @@ fun main() {
             }
         }
     }
+    executor.shutdown()
 }
 
 fun randomScene(): Iterable<Hittable> {
