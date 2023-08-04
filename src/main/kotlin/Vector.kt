@@ -95,8 +95,12 @@ data class Vector(var x: Double, var y: Double, var z: Double) {
         }
 
         @JvmStatic
-        private fun random(min: Double, max: Double) =
+        fun random(min: Double, max: Double) =
             Vector(Random.nextDouble(min, max), Random.nextDouble(min, max), Random.nextDouble(min, max))
+
+        @JvmStatic
+        fun random() =
+            Vector(Random.nextDouble(), Random.nextDouble(), Random.nextDouble())
 
         @JvmStatic
         private fun clamp(x: Double, min: Double, max: Double) = if (x < min) min else if (x > max) max else x
