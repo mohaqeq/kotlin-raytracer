@@ -33,7 +33,7 @@ class Metal(private val color: Color, fuzzy: Double = 0.0) : Material {
     }
 }
 
-class Dielectric(private val ir: Double) : Material {
+class Dielectric(private val ir: Double, private val color: Color = Color(1.0, 1.0, 1.0)) : Material {
     override fun Scatter(ray: Ray, collision: Collision): Scatter {
         val refractionRatio = if (collision.front) 1.0 / ir else ir
         val unitDirection = ray.direction.unit()
@@ -47,7 +47,7 @@ class Dielectric(private val ir: Double) : Material {
         else
             unitDirection.refract(collision.normal, refractionRatio)
 
-        return Scatter(Ray(collision.point, direction), Color(1.0, 1.0, 1.0), true)
+        return Scatter(Ray(collision.point, direction), color, true)
     }
 
     private fun reflectance(cosine: Double, refIdx: Double): Double {
